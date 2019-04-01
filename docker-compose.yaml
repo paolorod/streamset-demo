@@ -1,19 +1,24 @@
 version: '3'
 services:
   db:
-    image: mysql:5.7
+    image: postgres
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      POSTGRES_PASSWORD: example
+      PGDATA: /var/lib/postgresql/data/pgdata
+
     ports:
-      - '3306:13306'
+      - '5432:5432'
     expose:
-      - '3306'
+      - '5432'
     volumes:
-      - my-db:/var/lib/mysql
+      - my-db:/var/lib/postgresql/data/pgdata
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080  
 
   streamset-dc:
     image: "streamsets/datacollector"
@@ -21,6 +26,7 @@ services:
     ports:
      - "18630:18630"
      - "8000:8000"
+
     volumes:
      - ./sdc/data:/data
      - ./sdc/resources:/resources
