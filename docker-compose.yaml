@@ -21,7 +21,7 @@ services:
       - 8080:8080  
 
   streamset-dc:
-    image: "streamsets/datacollector"
+    image: "streamsets/datacollector:3.9.0-latest"
     container_name: dc
     ports:
      - "18630:18630"
